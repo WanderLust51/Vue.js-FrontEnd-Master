@@ -1,5 +1,8 @@
 <script setup>
-	import { ref } from 'vue'
+	import { ref, computed } from 'vue'
+	import { watchEffect } from 'vue';
+    import { onMounted } from 'vue';
+
 	function saludar(event){
 		console.log(event)
 	}
@@ -12,6 +15,28 @@
 	}
 
 	let yea = ref('')
+
+	let data = ref()
+
+	//watch effect
+	watchEffect(async () => {
+  		const response = await fetch(`https://jsonplaceholder.typicode.com/users/`)
+			.then(response=>response.json())
+		data.value = await response
+	}) 
+
+	//Variables computadas
+	let cantidad = ref(15);
+	let precio = ref(6);
+	let subtotal = computed(function(){
+		return cantidad.value * precio.value
+	})
+
+	//Usando componentes
+	import  Productos  from './components/productos.vue'
+
+	// onMounted
+
 
 </script>
 
@@ -31,6 +56,17 @@
 	<input type="text" @keypress="saludar($event)">
 	<h1>{{ yea }}</h1>
 
+	<!-- USANDO V-FOR -->
+	<ul>
+		<li v-for="(item, index) in data" :key="index">
+			{{ index }} - {{ item.name }}
+		</li>
+	</ul>
+
+	<h1>Subtotal {{ subtotal }}</h1>
+	
+	<!-- Usando componentes -->
+	<Productos />
 
 </template>
 
