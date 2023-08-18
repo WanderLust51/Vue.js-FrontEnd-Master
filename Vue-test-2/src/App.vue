@@ -34,8 +34,9 @@
 
 	//Usando componentes
 	import  Productos  from './components/productos.vue'
+	import Hijo from './components/hijo.vue'
 
-	// onMounted
+	let contador = ref(5)
 
 
 </script>
@@ -67,6 +68,7 @@
 	
 	<!-- Usando componentes -->
 	<Productos />
+	<Hijo :contador="900" />
 
 </template>
 
